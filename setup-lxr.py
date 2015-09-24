@@ -220,5 +220,5 @@ if __name__ == '__main__':
 
   with cd(pwd) as dir:
     print os.getcwd()
-    update_http_conf(apache_dir, 'httpd.conf')
+    update_http_conf(apache_dir, os.path.join(os.getcwd(),'httpd.conf'))
 
