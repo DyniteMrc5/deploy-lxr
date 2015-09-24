@@ -78,7 +78,7 @@ def setup_postgres():
     print 'PostgreSQL not detected, installing.'
   else:
     return
-  if sys.name == 'linux2':
+  if sys.platform == 'linux2':
     command = "sudo apt-get install postgresql"
     print command
     subprocess.call(command, shell=True)
