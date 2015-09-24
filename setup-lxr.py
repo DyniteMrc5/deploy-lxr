@@ -43,7 +43,8 @@ def setup(executable, target_dir, filename, source_url, options, setup_make=None
 def setup_ctags():
   executable = "ctags"
   target_dir = 'ctags-5.8'
-  filename = "{t}{e}".format(t=target_dir, e='tar.gz')
+  filename = "{t}{e}".format(t=target_dir, e='.tar.gz')
+
   source_url = 'http://prdownloads.sourceforge.net/ctags/{f}'.format(f=filename)
   options = ""
   setup(executable, target_dir, filename, source_url, options, configure_make_install)
