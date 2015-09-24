@@ -165,7 +165,7 @@ if __name__ == '__main__':
       apache_dir = apache_dir + '/'
   except:
     print "Usage: {f} <APACHE_DIR e.g. /etc/apache2 containing httpd.conf>"
-    prit "NB: Install apache2 and apache2-dev"
+    print "NB: Install apache2 and apache2-dev"
     sys.exit(-1)
 
   print 'Setup ctags'
@@ -196,7 +196,7 @@ if __name__ == '__main__':
   print 'Run database setup script.'
   print 'Passwords required are as follows: postgres, postgres, postgres... when promted for the new password insert lxrpw'
   print 'Then the password required switches to lxrpw from the 2nd request after the mention of database'
-  command = 'initdb.sh'
+  command = './initdb.sh'
   print command
   subprocess.check_call(command, shell=True)
 
