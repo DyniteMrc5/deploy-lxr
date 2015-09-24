@@ -78,20 +78,25 @@ def setup_postgres():
     print 'PostgreSQL not detected, installing.'
   else:
     return
-  extension = '.dmg'
-  filename_bare = "postgresql-9.4.4-3-osx"
-  filename = "{b}{e}".format(b=filename_bare, e=extension)
-  if not os.path.exists(filename):
-    url = "http://get.enterprisedb.com/postgresql/{f}".format(f=filename)
-    print 'Downloading {u}'.format(u=url)
-    urllib.urlretrieve(url, filename)
-  mountPointRoot = '/Volumes/PostgreSQL 9.4.4-3'
-  mountPoint = "{r}/{b}.app".format(r=mountPointRoot, b=filename_bare)
-  try:
-    os.system('hdiutil mount {f}'.format(f=filename))
-    subprocess.check_call('open "{t}"'.format(t=mountPoint), shell=True)
-  finally:
-    os.system('hdiutil unmount "{m}"'.format(m=mountPointRoot))
+  if sys.name == 'linux2':
+    command = "sudo apt-get install postgresql"
+    print command
+    subprocess.call(command, shell=True)
+  elif sys.platform == 'darwin':
+    extension = '.dmg'
+    filename_bare = "postgresql-9.4.4-3-osx"
+    filename = "{b}{e}".format(b=filename_bare, e=extension)
+    if not os.path.exists(filename):
+      url = "http://get.enterprisedb.com/postgresql/{f}".format(f=filename)
+      print 'Downloading {u}'.format(u=url)
+      urllib.urlretrieve(url, filename)
+    mountPointRoot = '/Volumes/PostgreSQL 9.4.4-3'
+    mountPoint = "{r}/{b}.app".format(r=mountPointRoot, b=filename_bare)
+    try:
+      os.system('hdiutil mount {f}'.format(f=filename))
+      subprocess.check_call('open "{t}"'.format(t=mountPoint), shell=True)
+    finally:
+      os.system('hdiutil unmount "{m}"'.format(m=mountPointRoot))
 
 def check_apache_and_restart():
   command = "sudo apachectl configtest"
