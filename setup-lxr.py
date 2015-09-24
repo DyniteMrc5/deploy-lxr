@@ -149,7 +149,7 @@ def update_http_conf(apache_dir, new_file):
     os.rename(target, target + '.bak')
   command = "sudo cp {n} {t}".format(n=new_file, t=target)
   print command
-  subprocess.check_call(command)
+  subprocess.check_call(command, shell=True)
   check_apache_and_restart()
 
 def setup_lxr():
@@ -220,5 +220,5 @@ if __name__ == '__main__':
 
   with cd(pwd) as dir:
     print os.getcwd()
-    update_http_conf(apache_dir, os.path.join(os.getcwd(),'httpd.conf'))
+    update_http_conf(apache_dir, 'httpd.conf')
 
