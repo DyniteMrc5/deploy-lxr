@@ -119,7 +119,7 @@ def get_lxr_target_dir():
   return 'lxr-2.0.3'
 
 def update_http_conf(apache_dir, new_file):
-  target = '{a}httpd.conf'.format(a=apache_dir)
+  target = '{a}/conf-available/lxr.conf'.format(a=apache_dir)
   if os.path.exists(target):
     os.rename(target, target + '.bak')
   shutil.copyfile(new_file, target)
