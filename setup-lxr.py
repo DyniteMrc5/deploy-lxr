@@ -82,6 +82,20 @@ def setup_postgres():
     command = "sudo apt-get install postgresql"
     print command
     subprocess.call(command, shell=True)
+
+    target = "/etc/postgresql/9.3/main/pg_hba.conf"
+    if os.path.exists(target):
+      command = "sudo mv {t} {t}.bak".format(t=target)
+      print command
+      subprocess.check_call(command)
+    command = "sudo mv pg_hba.conf "+target
+    print command
+    subprocess.check_call(command)
+
+    command = "sudo service postgresql restart"
+    print command
+    subprocess.check_call(command)
+
   elif sys.platform == 'darwin':
     extension = '.dmg'
     filename_bare = "postgresql-9.4.4-3-osx"
@@ -133,7 +147,9 @@ def update_http_conf(apache_dir, new_file):
   target = '{a}/conf-available/lxr.conf'.format(a=apache_dir)
   if os.path.exists(target):
     os.rename(target, target + '.bak')
-  shutil.copyfile(new_file, target)
+  command = "sudo cp {n} {t}".format(n=new_file, t=target)
+  print command
+  subprocess.check_call(command)
   check_apache_and_restart()
 
 def setup_lxr():
