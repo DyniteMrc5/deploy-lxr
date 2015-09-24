@@ -143,6 +143,15 @@ def setup_lxr():
   print command
   subprocess.check_call(command, shell=True)
 
+def setup_svn():
+  if sys.platform == 'linux2':
+    command = "sudo apt-get install svn"
+    print command
+    subprocess.check_call(command, shell=True)
+  else:
+    print "NOT IMPLEMENTED"
+    sys.exit(-1)
+
 if __name__ == '__main__':
   print __file__
   try:
@@ -171,6 +180,9 @@ if __name__ == '__main__':
 
   print 'Setup lxr'
   setup_lxr()
+
+  print 'Setup svn'
+  setup_svn()
 
   print 'Setup mod_perl'
   setup_mod_perl()
