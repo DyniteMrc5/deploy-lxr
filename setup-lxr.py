@@ -209,6 +209,8 @@ if __name__ == '__main__':
   print 'Setup mod_perl'
   setup_mod_perl()
 
+  pwd = os.getcwd()
+
   print 'Run database setup script.'
   print 'Passwords required are as follows: postgres, postgres, postgres... when promted for the new password insert lxrpw'
   print 'Then the password required switches to lxrpw from the 2nd request after the mention of database'
@@ -216,5 +218,7 @@ if __name__ == '__main__':
   print command
   subprocess.check_call(command, shell=True)
 
-  update_http_conf(apache_dir, 'httpd.conf')
+  with cd(pwd) as dir:
+    print os.getcwd()
+    update_http_conf(apache_dir, 'httpd.conf')
 
