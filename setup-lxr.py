@@ -132,16 +132,16 @@ def update_http_conf(apache_dir, new_file):
   check_apache_and_restart()
 
 def setup_lxr():
-  #http://sourceforge.net/projects/lxr/files/stable/lxr-2.0.3.tgz/download
   executable = None
   target_dir = get_lxr_target_dir()
-  filename = "{t}{e}".format(t=target_dir, e='.tar.gz')
-  source_url = 'http://downloads.sourceforge.net/project/lxr/stable/lxr-2.0.3.tgz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Flxr%2Ffiles%2Fstable%2F&ts=1443104545&use_mirror=vorboss'.format(f=filename)
-  options =''
-  setup(executable, target_dir, filename, source_url, options)
-  command = 'sudo mv {t} /etc/{t}'.format(t=target_dir)
-  print command
-  subprocess.check_call(command, shell=True)
+  if not os.path.isdir('/etc/' + target_dir):
+    filename = "{t}{e}".format(t=target_dir, e='.tar.gz')
+    source_url = 'http://downloads.sourceforge.net/project/lxr/stable/lxr-2.0.3.tgz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Flxr%2Ffiles%2Fstable%2F&ts=1443104545&use_mirror=vorboss'.format(f=filename)
+    options =''
+    setup(executable, target_dir, filename, source_url, options)
+    command = 'sudo mv {t} /etc/{t}'.format(t=target_dir)
+    print command
+    subprocess.check_call(command, shell=True)
 
 def setup_svn():
   if sys.platform == 'linux2':
