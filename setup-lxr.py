@@ -107,6 +107,11 @@ def check_apache_and_restart():
   subprocess.check_call(command, shell=True)
 
 def setup_mod_perl():
+
+  command = "sudo apt-get install libperl-dev"
+  print command
+  subprocess.check_call(command, shell=True)
+
   target_dir = 'mod_perl-2.0'
   command = "svn checkout https://svn.apache.org/repos/asf/perl/modperl/trunk/ {t}".format(t=target_dir)
   subprocess.check_call(command, shell=True)
@@ -160,6 +165,7 @@ if __name__ == '__main__':
       apache_dir = apache_dir + '/'
   except:
     print "Usage: {f} <APACHE_DIR e.g. /etc/apache2 containing httpd.conf>"
+    prit "NB: Install apache2 and apache2-dev"
     sys.exit(-1)
 
   print 'Setup ctags'
