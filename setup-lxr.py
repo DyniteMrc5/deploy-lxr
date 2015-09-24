@@ -145,7 +145,7 @@ def setup_lxr():
 
 def setup_svn():
   if sys.platform == 'linux2':
-    command = "sudo apt-get install svn"
+    command = "sudo apt-get install subversion"
     print command
     subprocess.check_call(command, shell=True)
   else:
