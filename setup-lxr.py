@@ -226,17 +226,8 @@ if __name__ == '__main__':
     print "NB: Install apache2 and apache2-dev"
     sys.exit(-1)
 
-  try:
-    p4user = os.environ['P4USER']
-  except:
-    print 'Set P4USER environment variable'
-    sys.exit(-1)
-
-  try:
-    p4pass = os.environ['P4PASS']
-  except:
-    print 'Set P4PASS environment variable'
-    sys.exit(-1)
+  print 'Check perforce creds'
+  check_p4()
 
   print 'Setup ctags'
   setup_ctags()

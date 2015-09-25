@@ -54,8 +54,24 @@ def sync(changelist):
   subprocess.check_call(command, shell=True)
 
 
+def check_p4():
+  try:
+    p4user = os.environ['P4USER']
+  except:
+    print 'Set P4USER environment variable'
+    sys.exit(-1)
+
+  try:
+    p4pass = os.environ['P4PASS']
+  except:
+    print 'Set P4PASS environment variable'
+    sys.exit(-1)
+
+
 if __name__ == '__main__':
   print __file__
+
+  check_p4()
 
   print 'Setup p4'
   setup_p4()
