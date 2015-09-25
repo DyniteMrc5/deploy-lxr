@@ -120,7 +120,7 @@ def check_apache_and_restart():
   print command
   subprocess.check_call(command, shell=True)
 
-def setup_mod_perl():
+def setup_mod_perl(apache_dir):
 
   command = "sudo apt-get install libperl-dev"
   print command
