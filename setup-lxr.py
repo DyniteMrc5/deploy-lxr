@@ -122,36 +122,44 @@ def check_apache_and_restart():
 
 def setup_mod_perl(apache_dir):
 
+  command = "sudo apt-get install lynx"
+  print command
+  subprocess.check_call(command, shell=True)
+
   command = "sudo apt-get install libperl-dev"
   print command
   subprocess.check_call(command, shell=True)
 
-  target_dir = 'mod_perl-2.0'
-  command = "svn checkout https://svn.apache.org/repos/asf/perl/modperl/trunk/ {t}".format(t=target_dir)
+  command = "sudo apt-get install libapache2-mod-perl2"
+  print command
   subprocess.check_call(command, shell=True)
-  with cd(target_dir) as dir:
-    command = "sudo apt-get install libgdbm-dev"
-    print command
-    subprocess.check_call(command, shell=True)
-    command = "perl Makefile.PL MP_CCOPTS=-std=gnu89"
-    print command
-    subprocess.check_call(command, shell=True)
-    command = "make"
-    print command
-    subprocess.check_call(command, shell=True)
-    command = "sudo make install"
-    print command
-    subprocess.check_call(command, shell=True)
+  check_apache_and_restart()
 
-    command = "/usr/bin/apxs -q LIBEXECDIR"
-    print command
-    output = subprocess.check_output(command, shell=True)
-    out_dir = output.splitlines()[0]
-    command = "sudo cp {d}/mod_perl.so {a}mods-available".format(d=out_dir, a=apache_dir)
-    print command
-    subprocess.check_call(command, shell=True)
+#  target_dir = 'mod_perl-2.0'
+#  command = "svn checkout https://svn.apache.org/repos/asf/perl/modperl/trunk/ {t}".format(t=target_dir)
+#  subprocess.check_call(command, shell=True)
+#  with cd(target_dir) as dir:
+#    command = "sudo apt-get install libgdbm-dev"
+#    print command
+#    subprocess.check_call(command, shell=True)
+#    command = "perl Makefile.PL MP_CCOPTS=-std=gnu89"
+#    print command
+#    subprocess.check_call(command, shell=True)
+#    command = "make"
+#    print command
+#    subprocess.check_call(command, shell=True)
+#    command = "sudo make install"
+#    print command
+#    subprocess.check_call(command, shell=True)##
 
-    check_apache_and_restart()
+#    command = "/usr/bin/apxs -q LIBEXECDIR"
+#    print command
+#    output = subprocess.check_output(command, shell=True)
+#    out_dir = output.splitlines()[0]
+#    command = "sudo cp {d}/mod_perl.so {a}mods-available".format(d=out_dir, a=apache_dir)
+#    print command
+#    subprocess.check_call(command, shell=True)
+#    check_apache_and_restart()
 
 def get_lxr_target_dir():
   return 'lxr-2.0.3'
@@ -163,6 +171,16 @@ def update_http_conf(apache_dir, new_file):
     print command
     subprocess.check_call(command, shell=True)
   command = "sudo cp {n} {t}".format(n=new_file, t=target)
+  print command
+  subprocess.check_call(command, shell=True)
+
+def update_http_perl():
+  target = '/etc/lxr-2.0.3/apache2-require.pl'
+  if os.path.exists(target):
+    command = "sudo mv {t} {t}".format(t=target) + ".bak"
+    print command
+    subprocess.check_call(command, shell=True)
+  command = "sudo cp {n} {t}".format(n="apache2-require.pl", t=target)
   print command
   subprocess.check_call(command, shell=True)
   check_apache_and_restart()
@@ -236,4 +254,6 @@ if __name__ == '__main__':
   with cd(pwd) as dir:
     print os.getcwd()
     update_http_conf(apache_dir, 'httpd.conf')
+    
+  update_http_perl()
 
