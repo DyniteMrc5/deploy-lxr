@@ -176,8 +176,13 @@ def update_http_conf(apache_dir, new_file):
   subprocess.check_call(command, shell=True)
 
 def update_http_perl():
-  target = '/etc/lxr-2.0.3/apache2-require.pl'
+  target_dir = "/etc/lxr-2.0.3/custom.d"
+  target = '{t}/apache2-require.pl'.format(t=target_dir)
   if os.path.exists(target):
+    command = "sudo mkdir -p {t}".format(t=target_dir)
+    print command
+    subprocess.check_call(command, shell=True)
+
     command = "sudo mv {t} {t}".format(t=target) + ".bak"
     print command
     subprocess.check_call(command, shell=True)
