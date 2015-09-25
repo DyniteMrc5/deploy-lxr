@@ -41,7 +41,8 @@ def setup(executable, target_dir, filename, source_url, options, setup_make=None
     else:
       print 'No setup_make for {e}'.format(e=executable)
 
-def setup_ctags():
+
+def setup_ctags_source():
   executable = "ctags"
   target_dir = 'ctags-5.8'
   filename = "{t}{e}".format(t=target_dir, e='.tar.gz')
@@ -49,6 +50,11 @@ def setup_ctags():
   source_url = 'http://prdownloads.sourceforge.net/ctags/{f}'.format(f=filename)
   options = ""
   setup(executable, target_dir, filename, source_url, options, configure_make_install)
+
+def setup_ctags():
+  command = "sudo apt-get install exuberant-ctags"
+  print command
+  subprocess.check_call(command, shell=True)
 
 # glimpse needs a bit of manual intervention to create lib and bin directories before 'make'
 def setup_glimpse_premake():
@@ -235,6 +241,14 @@ def setup_svn():
     print "NOT IMPLEMENTED"
     sys.exit(-1)
 
+def setup_cron():
+  if not os.path.isdir('logs'):
+    os.makedirs('logs')
+  command = 'sudo echo "0 0 * * * lxr cd ~/deploy-lxr && python run_lxr.py > ~/deploy-lxr/logs/cron.log 2>&1" >> /etc/crontab'
+  print command
+  subprocess.check_call(command, shell=True)
+
+
 if __name__ == '__main__':
   print __file__
   try:
@@ -302,4 +316,7 @@ if __name__ == '__main__':
 
   print 'Setup p4 clientspec'
   setup_p4_client(get_latest_changelist())
+
+  print 'Setup cron'
+  setup_cron()
 
