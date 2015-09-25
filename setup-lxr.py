@@ -134,7 +134,6 @@ def setup_mod_perl(apache_dir):
   command = "sudo apt-get install libapache2-mod-perl2"
   print command
   subprocess.check_call(command, shell=True)
-  check_apache_and_restart()
 
 #  target_dir = 'mod_perl-2.0'
 #  command = "svn checkout https://svn.apache.org/repos/asf/perl/modperl/trunk/ {t}".format(t=target_dir)
@@ -164,13 +163,20 @@ def setup_mod_perl(apache_dir):
 
 def setup_perl_mmagic():
   command = "sudo apt-get install libfile-mmagic-perl"
+  print command
   subprocess.check_call(command, shell=True)
-  check_apache_and_restart()
 
 def setup_perl_libdbi():
   command = "sudo apt-get install libdbi-perl"
+  print command
   subprocess.check_call(command, shell=True)
-  check_apache_and_restart()
+
+
+def setup_perl_libdbd_pg():
+  command = "sudo apt-get install libdbd-pg-perl"
+  print command
+  subprocess.check_call(command, shell=True)
+  
 
 def get_lxr_target_dir():
   return 'lxr-2.0.3'
@@ -199,7 +205,6 @@ def update_http_perl():
   command = "sudo cp {n} {t}".format(n="apache2-require.pl", t=target)
   print command
   subprocess.check_call(command, shell=True)
-  check_apache_and_restart()
 
 def setup_lxr():
   executable = None
@@ -289,6 +294,8 @@ if __name__ == '__main__':
     update_http_conf(apache_dir, 'httpd.conf')
 
   update_http_perl()
+
+  check_apache_and_restart()
 
   print 'Setup p4'
   setup_p4()
