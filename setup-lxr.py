@@ -4,6 +4,7 @@ import urllib
 import extract_tar
 from with_cd import cd
 import shutil
+from p4_util import *
 
 def check_executable(executable):
   check = "type {c}".format(c=executable)
@@ -205,7 +206,6 @@ def setup_lxr():
     print command
     subprocess.check_call(command, shell=True)
 
-
 def setup_svn():
   if sys.platform == 'linux2':
     command = "sudo apt-get install subversion"
@@ -224,6 +224,18 @@ if __name__ == '__main__':
   except:
     print "Usage: {f} <APACHE_DIR e.g. /etc/apache2 containing httpd.conf>"
     print "NB: Install apache2 and apache2-dev"
+    sys.exit(-1)
+
+  try:
+    p4user = os.environ['P4USER']
+  except:
+    print 'Set P4USER environment variable'
+    sys.exit(-1)
+
+  try:
+    p4pass = os.environ['P4PASS']
+  except:
+    print 'Set P4PASS environment variable'
     sys.exit(-1)
 
   print 'Setup ctags'
@@ -265,4 +277,10 @@ if __name__ == '__main__':
     update_http_conf(apache_dir, 'httpd.conf')
 
   update_http_perl()
+
+  print 'Setup p4'
+  setup_p4()
+
+  print 'Setup p4 clientspec'
+  setup_p4_client(get_latest_changelist())
 
