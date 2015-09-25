@@ -162,6 +162,16 @@ def setup_mod_perl(apache_dir):
 #    subprocess.check_call(command, shell=True)
 #    check_apache_and_restart()
 
+def setup_perl_mmagic():
+  command = "sudo apt-get install libfile-mmagic-perl"
+  subprocess.check_call(command, shell=True)
+  check_apache_and_restart()
+
+def setup_perl_libdbi():
+  command = "sudo apt-get install libdbi-perl"
+  subprocess.check_call(command, shell=True)
+  check_apache_and_restart()
+
 def get_lxr_target_dir():
   return 'lxr-2.0.3'
 
@@ -258,6 +268,12 @@ if __name__ == '__main__':
 
   print 'Setup mod_perl'
   setup_mod_perl(apache_dir)
+
+  print 'Setup Perl File::MMagic module'
+  setup_perl_mmagic()
+
+  print 'Setup Perl libdbi-perl'
+  setup_perl_libdbi()
 
   pwd = os.getcwd()
 
