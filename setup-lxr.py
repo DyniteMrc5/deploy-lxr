@@ -197,6 +197,15 @@ def setup_lxr():
     print command
     subprocess.check_call(command, shell=True)
 
+    command = "sudo mv lxr.conf /etc/{t}".format(t=target_dir)
+    print command
+    subprocess.check_call(command, shell=True)
+
+    command = "sudo mv /etc/{t}/source /etc/{t}/source.pl".format(t=target_dir)
+    print command
+    subprocess.check_call(command, shell=True)
+
+
 def setup_svn():
   if sys.platform == 'linux2':
     command = "sudo apt-get install subversion"
@@ -254,6 +263,6 @@ if __name__ == '__main__':
   with cd(pwd) as dir:
     print os.getcwd()
     update_http_conf(apache_dir, 'httpd.conf')
-    
+
   update_http_perl()
 
