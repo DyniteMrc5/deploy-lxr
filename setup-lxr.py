@@ -146,7 +146,9 @@ def get_lxr_target_dir():
 def update_http_conf(apache_dir, new_file):
   target = '{a}conf-available/lxr.conf'.format(a=apache_dir)
   if os.path.exists(target):
-    os.rename(target, target + '.bak')
+    command = "sudo mv {t} {t}".format(t=target) + ".bak"
+    print command
+    subprocess.check_call(command, shell=True)
   command = "sudo cp {n} {t}".format(n=new_file, t=target)
   print command
   subprocess.check_call(command, shell=True)
