@@ -2,13 +2,13 @@ echo "*** PostgreSQL - Creating tree user lxr"
 dropuser   -U postgres lxr
 createuser -U postgres lxr -d -P -R -S
 
-echo "*** PostgreSQL - Creating tree database lxr_db_new"
-dropdb     -U lxr lxr_db_new
-createdb   -U lxr lxr_db_new
-createlang -U lxr -d lxr_db_new plpgsql
+echo "*** PostgreSQL - Creating tree database lxr_db"
+dropdb     -U lxr lxr_db
+createdb   -U lxr lxr_db
+createlang -U lxr -d lxr_db plpgsql
 
-echo "*** PostgreSQL - Configuring tables lxr_ in database lxr_db_new"
-psql -q -U lxr lxr_db_new <<END_OF_TABLES
+echo "*** PostgreSQL - Configuring tables lxr_ in database lxr_db"
+psql -q -U lxr lxr_db <<END_OF_TABLES
 drop table if exists lxr_filenum;
 drop table if exists lxr_symnum;
 drop table if exists lxr_typenum;
