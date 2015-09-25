@@ -130,6 +130,9 @@ def setup_mod_perl():
   command = "svn checkout https://svn.apache.org/repos/asf/perl/modperl/trunk/ {t}".format(t=target_dir)
   subprocess.check_call(command, shell=True)
   with cd(target_dir) as dir:
+    command = "sudo apt-get install libgdbm-dev"
+    print command
+    subprocess.check_call(command, shell=True)
     command = "perl Makefile.PL MP_CCOPTS=-std=gnu89"
     print command
     subprocess.check_call(command, shell=True)
@@ -138,6 +141,16 @@ def setup_mod_perl():
     subprocess.check_call(command, shell=True)
     command = "sudo make install"
     print command
+    subprocess.check_call(command, shell=True)
+
+    command = "/usr/bin/apxs -q LIBEXECDIR"
+    print command
+    output = subprocess.check_output(command, shell=True)
+    out_dir = output.splitlines()[0]
+    command = "sudo cp {d}/mod_perl.so {a}mods-available".format(d=out_dir, a=apache_dir)
+    print command
+    subprocess.check_call(command, shell=True)
+
     check_apache_and_restart()
 
 def get_lxr_target_dir():
@@ -209,7 +222,7 @@ if __name__ == '__main__':
   setup_svn()
 
   print 'Setup mod_perl'
-  setup_mod_perl()
+  setup_mod_perl(apache_dir)
 
   pwd = os.getcwd()
 
