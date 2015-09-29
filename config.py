@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 import p4_util
 
 def new_changelists(current):
@@ -59,6 +60,14 @@ def main(lxr, source_dir):
           nextLine = True
 
         output.write(line)
+  
+  command = "sudo mv {l} {l}.bak".format(l=lxr)
+  print command
+  subprocess.check_call(command, shell=True)
+
+  command = "sudo mv {l}.new {l}".format(l=lxr)
+  print command
+  subprocess.check_call(command, shell=True)
 
 
 if __name__ == "__main__":
