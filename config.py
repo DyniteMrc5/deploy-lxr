@@ -21,14 +21,14 @@ def new_changelists(current):
   versionsNum.append(int(latest))
 
   srted = sorted(versionsNum)[-(p4_util.DEFAULT_MAX_SYNC-1):]
-  srted.append(latest)
+  srted.append(int(latest))
 
   output = ""
   for v in srted:
     if len(output) > 0:
-      output = output + ', ' + v
+      output = output + ', ' + str(v)
     else:
-      output = output + v
+      output = output + str(v)
 
   return output
 
