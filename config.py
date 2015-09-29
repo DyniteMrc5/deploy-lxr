@@ -22,6 +22,7 @@ def new_changelists(current):
 
   srted = sorted(versionsNum)[-(p4_util.DEFAULT_MAX_SYNC-1):]
   srted.append(int(latest))
+  srted = set(srted)
 
   output = ""
   for v in srted:
@@ -30,7 +31,7 @@ def new_changelists(current):
     else:
       output = output + str(v)
 
-  return output
+  return output + '\n'
 
 def main(lxr, source_dir):
   print "main ({l}, {s})".format(l=lxr, s=source_dir)
