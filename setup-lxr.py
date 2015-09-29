@@ -41,6 +41,10 @@ def setup(executable, target_dir, filename, source_url, options, setup_make=None
     else:
       print 'No setup_make for {e}'.format(e=executable)
 
+def setup_flex():
+  command = "sudo apt-get install flex"
+  print command
+  subprocess.check_call(command, shell=True)
 
 def setup_ctags_source():
   executable = "ctags"
@@ -262,6 +266,9 @@ if __name__ == '__main__':
 
   print 'Check perforce creds'
   check_p4()
+
+  print 'Setup flex'
+  setup_flex()
 
   print 'Setup ctags'
   setup_ctags()
