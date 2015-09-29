@@ -15,19 +15,21 @@ def new_changelists(current):
     if int(v) < int(lowest):
       lowest = v
 
-  count = len(versions)
-  output = ""
+  versionsNum = []
   for v in versions:
-    if count >= p4_util.DEFAULT_MAX_SYNC and not v == lowest:
-      if len(output) > 0:
-        output = output + ', ' + v
-      else:
-        output = output + v
+    versionsNum.append(int(v))
+  versionsNum.append(int(latest))
 
-  if len(output) > 0:
-    output = output + ', ' + str(latest)
-  else:
-    output = str(latest)
+  srted = sorted(versionsNum)[-(p4_util.DEFAULT_MAX_SYNC-1):]
+  srted.append(latest)
+
+  output = ""
+  for v in srted:
+    if len(output) > 0:
+      output = output + ', ' + v
+    else:
+      output = output + v
+
   return output
 
 def main(lxr, source_dir):
