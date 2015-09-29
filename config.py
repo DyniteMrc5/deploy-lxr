@@ -15,9 +15,10 @@ def new_changelists(current):
     if int(v) < int(lowest):
       lowest = v
 
+  count = len(versions)
   output = ""
   for v in versions:
-    if not v == lowest:
+    if count >= p4_util.DEFAULT_MAX_SYNC and not v == lowest:
       if len(output) > 0:
         output = output + ', ' + v
       else:
