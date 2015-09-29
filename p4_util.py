@@ -62,7 +62,7 @@ def check_p4():
     sys.exit(-1)
 
   try:
-    p4pass = os.environ['P4PASS']
+    p4pass = os.environ['P4PASSWD']
   except:
     print 'Set P4PASS environment variable'
     sys.exit(-1)
