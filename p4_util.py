@@ -68,6 +68,20 @@ def check_p4():
     sys.exit(-1)
 
 
+def write_latest(changelist):
+  with open('perforce_latest.plist', 'w') as plist:
+    print 'Writing {f}'.format(f=plist.name)
+    plist.write('LATEST={c}'.format(c=changelist))
+
+def read_latest():
+  try:
+    with open('perforce_latest.plist', 'r') as plist:
+      data = plist.read()
+      changelist = data.split('=')[1]
+      return changelist
+  except:
+    return 0
+
 if __name__ == '__main__':
   print __file__
 
@@ -76,9 +90,21 @@ if __name__ == '__main__':
   print 'Setup p4'
   setup_p4()
 
-  print 'Setup p4 clientspec'
+  print 'Get latest server changelist'
   changelist = get_latest_changelist()
-  setup_p4_client(changelist)
 
-  print 'Sync'
-  sync(changelist)
+  print "Get latest sync'd chagnelist"
+  latest = read_latest()
+
+  if(latest >= changelist):
+    print 'Already have latest'
+  else:
+    print 'Setup p4 clientspec'
+    setup_p4_client(changelist)
+
+    print 'Sync'
+    sync(changelist)
+
+    print 'Write latest to file'
+    write_latest(changelist)
+
