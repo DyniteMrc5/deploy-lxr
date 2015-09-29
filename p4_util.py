@@ -81,7 +81,7 @@ def read_latest():
       changelist = data.split('=')[1]
       return changelist
   except:
-    return 0
+    return "0"
 
 def cleanup_oldest():
   path = '/home/lxr/Perforce/main'
@@ -104,7 +104,7 @@ def main():
   print "Get latest sync'd chagnelist"
   latest = read_latest()
 
-  if(latest >= changelist):
+  if(int(latest) >= int(changelist)):
     print 'Already have latest'
   else:
     print 'Setup p4 clientspec'

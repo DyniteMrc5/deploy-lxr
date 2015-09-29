@@ -2,6 +2,7 @@ import os
 import subprocess
 from with_cd import cd
 import p4_util
+import config
 
 if __name__ == '__main__':
   print __file__
@@ -13,5 +14,7 @@ if __name__ == '__main__':
     command = './genxref --url=http://lxr/lxr --version={cl}'.format(cl=latest)
     print command
     subprocess.check_call(command, shell=True)
-    
+
+  config.main('/etc/lxr-2.0.3/lxr.conf','/home/lxr/Perforce/main')
+
   print os.system('date')
