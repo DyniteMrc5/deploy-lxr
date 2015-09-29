@@ -28,7 +28,7 @@ def new_changelists(current):
   output = ""
   for v in srted:
     if len(output) > 0:
-      output = output + ', ' + str(v)
+      output = output + ' ' + str(v)
     else:
       output = output + str(v)
 
