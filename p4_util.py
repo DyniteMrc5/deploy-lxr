@@ -5,6 +5,8 @@ import extract_tar
 from with_cd import cd
 import shutil
 
+DEFAULT_MAX_SYNC=5
+
 def download_p4():
   urllib.urlretrieve('http://cdist2.perforce.com/perforce/r10.2/bin.linux26x86_64/p4', 'p4')
 
@@ -67,7 +69,6 @@ def check_p4():
     print 'Set P4PASSWD environment variable'
     sys.exit(-1)
 
-
 def write_latest(changelist):
   with open('perforce_latest.plist', 'w') as plist:
     print 'Writing {f}'.format(f=plist.name)
@@ -81,6 +82,15 @@ def read_latest():
       return changelist
   except:
     return 0
+
+def cleanup_oldest():
+  path = '/home/lxr/Perforce/main'
+  dirs = [ f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
+  number = len(dirs)
+  if number > DEFAULT_MAX_SYNC:
+    oldest = min(dirs)
+    print "{c} changelists sync'd - deleting oldest ({o})".format(c=number, o=oldest)
+    shutil.removetree(oldest)
 
 def main():
   check_p4()
@@ -107,6 +117,9 @@ def main():
     write_latest(changelist)
 
     latest = changelist
+
+  print 'Try cleanup'
+  cleanup_oldest()
 
   print 'LATEST={l}'.format(l=latest)
   return latest
