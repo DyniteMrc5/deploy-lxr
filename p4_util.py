@@ -64,7 +64,7 @@ def check_p4():
   try:
     p4pass = os.environ['P4PASSWD']
   except:
-    print 'Set P4PASS environment variable'
+    print 'Set P4PASSWD environment variable'
     sys.exit(-1)
 
 
@@ -82,9 +82,7 @@ def read_latest():
   except:
     return 0
 
-if __name__ == '__main__':
-  print __file__
-
+def main():
   check_p4()
 
   print 'Setup p4'
@@ -107,4 +105,14 @@ if __name__ == '__main__':
 
     print 'Write latest to file'
     write_latest(changelist)
+
+    latest = changelist
+
+  print 'LATEST={l}'.format(l=latest)
+  return latest
+
+if __name__ == '__main__':
+  print __file__
+  main()
+
 

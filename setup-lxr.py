@@ -245,7 +245,7 @@ def setup_cron():
   if not os.path.isdir('logs'):
     os.makedirs('logs')
   command = 'sudo echo "0 0 * * * lxr cd ~/deploy-lxr && python run_lxr.py > ~/deploy-lxr/logs/cron.log 2>&1" >> /etc/crontab'
-  print command
+  print 'Adding command ({c}) to /etc/crontab'.format(c=command)
   subprocess.check_call(command, shell=True)
 
 
