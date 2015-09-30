@@ -3,6 +3,18 @@ import sys
 import subprocess
 import p4_util
 
+def current_versions(lxr):
+  with open(lxr, 'rw') as file:
+    content = file.readlines()
+    nextLine = False
+    for line in content:
+      if nextLine:
+        versions = line.split(' ')
+        versions = [v.strip() for v in versions]
+
+      if "'range' => [qw(" in line:
+        nextLine = True
+
 def new_changelists(current):
   latest = p4_util.read_latest()
   current = current.strip()
