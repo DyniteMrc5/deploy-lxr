@@ -8,9 +8,11 @@ if __name__ == '__main__':
   print __file__
   print os.system('date')
 
+  lxr = '/etc/lxr-2.0.3/lxr.conf'
+
   latest = p4_util.main()
   
-  if latest in config.current_versions():
+  if latest in config.current_versions(lxr):
     print 'Config already processed'
     sys.exit(0)
 
@@ -19,6 +21,6 @@ if __name__ == '__main__':
     print command
     subprocess.check_call(command, shell=True)
 
-  config.main('/etc/lxr-2.0.3/lxr.conf','/home/lxr/Perforce/main')
+  config.main(lxr,'/home/lxr/Perforce/main')
 
   print os.system('date')
