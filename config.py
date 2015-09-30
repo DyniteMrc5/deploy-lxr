@@ -11,9 +11,12 @@ def current_versions(lxr):
       if nextLine:
         versions = line.split(' ')
         versions = [v.strip() for v in versions]
+        return versions
 
       if "'range' => [qw(" in line:
         nextLine = True
+
+  sys.exit("No versions found in {l}".format(l=lxr))
 
 def new_changelists(current):
   latest = p4_util.read_latest()
