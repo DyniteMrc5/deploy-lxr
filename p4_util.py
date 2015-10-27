@@ -90,7 +90,7 @@ def cleanup_oldest():
   if number > DEFAULT_MAX_SYNC:
     oldest = min(dirs)
     print "{c} changelists sync'd - deleting oldest ({o})".format(c=number, o=oldest)
-    shutil.removetree(oldest)
+    shutil.rmtree(oldest)
 
 def main():
   check_p4()
