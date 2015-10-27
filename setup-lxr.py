@@ -252,6 +252,11 @@ def setup_cron():
   print 'Adding command ({c}) to /etc/crontab'.format(c=command)
   subprocess.check_call(command, shell=True)
 
+def setup_swishe_permissions():
+  command = 'sudo chmod -R a+w /etc/swish-e'
+  print 'Setting up write permissions to /etc/swish-e: {c}'.format(c=command)
+  subprocess.check_call(command, shell=True)
+
 
 if __name__ == '__main__':
   print __file__
@@ -327,3 +332,5 @@ if __name__ == '__main__':
   print 'Setup cron'
   setup_cron()
 
+  print 'Setup permissions'
+  setup_swishe_permissions()
