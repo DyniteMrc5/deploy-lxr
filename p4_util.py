@@ -61,13 +61,13 @@ def check_p4():
     p4user = os.environ['P4USER']
   except:
     print 'Set P4USER environment variable'
-    sys.exit(-1)
+    raise
 
   try:
     p4pass = os.environ['P4PASSWD']
   except:
     print 'Set P4PASSWD environment variable'
-    sys.exit(-1)
+    raise
 
 def write_latest(changelist):
   with open('perforce_latest.plist', 'w') as plist:
@@ -90,7 +90,7 @@ def cleanup_oldest():
   if number > DEFAULT_MAX_SYNC:
     oldest = min(dirs)
     print "{c} changelists sync'd - deleting oldest ({o})".format(c=number, o=oldest)
-    shutil.rmtree(oldest)
+    shutil.rmtree(os.path.join(path,oldest))
 
 def main():
   check_p4()
