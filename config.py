@@ -25,7 +25,7 @@ def new_changelists(current):
   if current == "":
     return latest
 
-  versions = current.split(',')
+  versions = current.split(' ')
   lowest = versions[0]
   for v in versions:
     if int(v) < int(lowest):
