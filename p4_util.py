@@ -51,7 +51,7 @@ View:
   print output.decode()
 
 def sync(changelist):
-  command = './p4 sync -f //depot/sdk/main/...@{c}'.format(c=changelist)
+  command = './p4 sync -f //lxr/main/{c}...'.format(c=changelist)
   print command
   subprocess.check_call(command, shell=True)
 
@@ -87,6 +87,7 @@ def cleanup_oldest():
   path = '/home/lxr/Perforce/main'
   dirs = [ f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
   number = len(dirs)
+  print 'Found {n} existing perforce dirs. (MAX allowed = {m})'.format(n=number, m=DEFAULT_MAX_SYNC)
   if number > DEFAULT_MAX_SYNC:
     oldest = min(dirs)
     print "{c} changelists sync'd - deleting oldest ({o})".format(c=number, o=oldest)
