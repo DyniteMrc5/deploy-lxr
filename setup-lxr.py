@@ -257,6 +257,18 @@ def setup_swishe_permissions():
   print 'Setting up write permissions to /etc/swish-e: {c}'.format(c=command)
   subprocess.check_call(command, shell=True)
 
+def setup_glimpse_swishe_perms():
+  command = 'sudo chmod 777 $(ls $(which glimpse))'
+  print 'Setting permissions for glimpse: {c}'.format(c=cmd)
+  subprocess.check_call(command, shell=True)
+
+  command = 'sudo chmod 777 $(ls $(which glimpseindex))'
+  print 'Setting permissions for glimpseindex: {c}'.format(c=cmd)
+  subprocess.check_call(command, shell=True)
+
+  command = 'sudo chmod 777 $(ls $(which swish-e))'
+  print 'Setting permissions for swish-e: {c}'.format(c=cmd)
+  subprocess.check_call(command, shell=True)
 
 if __name__ == '__main__':
   print __file__
@@ -334,3 +346,4 @@ if __name__ == '__main__':
 
   print 'Setup permissions'
   setup_swishe_permissions()
+  setup_glimpse_swishe_perms()

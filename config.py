@@ -77,15 +77,15 @@ def main(lxr, source_dir):
         output.write(line)
   
   if os.path.exists("{l}.bak".format(l=lxr)):
-    command = "sudo rm {l}.bak".format(l=lxr)
+    command = "rm {l}.bak".format(l=lxr)
     print command
     subprocess.check_call(command, shell=True)
 
-  command = "sudo mv {l} {l}.bak".format(l=lxr)
+  command = "mv {l} {l}.bak".format(l=lxr)
   print command
   subprocess.check_call(command, shell=True)
 
-  command = "sudo mv {l}.new {l}".format(l=lxr)
+  command = "mv {l}.new {l}".format(l=lxr)
   print command
   subprocess.check_call(command, shell=True)
 
