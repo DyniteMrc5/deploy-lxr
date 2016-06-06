@@ -17,11 +17,11 @@ if __name__ == '__main__':
     print 'Config already processed'
     sys.exit(0)
 
+  config.main(lxr,'/home/lxr/Perforce/main')
+
   with cd('/etc/lxr-2.0.3') as dir:
-    command = './genxref --url=http://lxr/lxr --version={cl}'.format(cl=latest)
+    command = './genxref --url=http://lxr/lxr --allversions'
     print command
     subprocess.check_call(command, shell=True)
-
-  config.main(lxr,'/home/lxr/Perforce/main')
 
   print os.system('date')
